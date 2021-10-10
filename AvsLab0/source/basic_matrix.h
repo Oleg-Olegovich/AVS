@@ -3,6 +3,7 @@
 
 #include "usual_matrix.h"
 #include "diagonal_matrix.h"
+#include "triangular_matrix.h"
 
 enum MatrixType {
     USUAL, DIAGONAL, TRIANGULAR
@@ -15,7 +16,7 @@ struct BasicMatrix {
         DiagonalMatrix* diagonal;
         TriangularMatrix* triangular;
     };
-    int dimension;
+    size_t dimension;
 };
 
 #endif

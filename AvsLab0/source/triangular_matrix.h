@@ -6,6 +6,10 @@ struct TriangularMatrix {
     int *matrix;
 };
 
-void printMatrix(int *matrix, int dimension);
+void printMatrix(int *matrix, size_t dimension);
+
+int** convertToTwoDimensional(int *array, size_t dimension);
+
+int* convertToArray(int **matrix, size_t dimension);
 
 #endif

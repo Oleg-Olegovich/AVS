@@ -1,9 +1,13 @@
-#ifndef SORT_H
-#define SORT_H
+#ifndef AVS_SORT_H
+#define AVS_SORT_H
 
-#include "encoded_string.h"
+#include "stdint.h"
+#include "float.h"
+#include "basic_matrix.h"
+#include "math.h"
 
-int32_t common_func(EncodedString* es);
-void sort_array_of_encoded_strings_desc(EncodedString** ess, int32_t n);
+size_t binarySearch() {
+
+}
 
 #endif

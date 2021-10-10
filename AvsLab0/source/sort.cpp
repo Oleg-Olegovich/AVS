@@ -1,50 +1,89 @@
 #include "sort.h"
 
-int32_t common_func(EncodedString *es) {
-    int32_t sum = 0;
-    size_t length = strlen(es->str);
-    for (uint32_t i = 0; i < length; ++i) {
-        sum += static_cast<int32_t>(es->str[i]);
+const long double eps = 1e-8;
+
+long double calculateArithmeticMean(int *array, size_t dimension) {
+    // Используется тип с максимальной вместимостью, так как
+    // в массиве может быть любое число элементов.
+    long double result = 0;
+    for (size_t i = 0; i < dimension; ++i) {
+        result += array[i];
     }
-    return sum / length;
+    return result / dimension;
 }
 
-int32_t binary_search_location(int32_t a[], int32_t item, int32_t low, int32_t high) {
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-        if (item == a[mid])
-            return mid + 1;
-        else if (item > a[mid])
-            high = mid - 1;
-        else
-            low = mid + 1;
+size_t binarySearch(int **matrix, size_t dimension, long double mean,
+                    size_t low, size_t high) {
+    if (high <= low) {
+        return (mean > calculateArithmeticMean(matrix[low], dimension))
+                 ? (low + 1) : low;
     }
-
-    return low;
+    size_t mid = (low + high) / 2;
+    long double mid_value = calculateArithmeticMean(matrix[mid], dimension);
+    if (fabs(mean - mid_value) < eps) {
+        return mid + 1;
+    }
+    if (mean > mid_value + eps) {
+        return binarySearch(matrix, dimension, mean, mid + 1, high);
+    }
+    return binarySearch(matrix, dimension, mean, low, mid - 1);
 }
 
-void sort_array_of_encoded_strings_desc(EncodedString **ess, int32_t n) {
-    int32_t *keys = new int32_t[n];
-    for (int32_t i = 0; i < n; ++i) {
-        keys[i] = common_func(ess[i]);
-    }
-
-    int32_t i, j, loc, selected;
-    EncodedString *selected_es;
-
-    for (i = 1; i < n; ++i) {
-        j = i - 1;
-        selected = keys[i];
-        selected_es = ess[i];
-        loc = binary_search_location(keys, selected, 0, i);
-        while (j >= loc) {
-            keys[j + 1] = keys[j];
-            ess[j + 1] = ess[j];
+void binaryInsertionSort(int **matrix, size_t dimension) {
+    for (size_t i = 1; i < dimension; ++i) {
+        size_t j = i - 1;
+        long double selected_mean = calculateArithmeticMean(matrix[i], dimension);
+        size_t index = binarySearch(matrix, dimension, selected_mean, 0, j);
+        while (j >= index)
+        {
+            matrix[j + 1] = matrix[j];
             --j;
         }
-        keys[j + 1] = selected;
-        ess[j + 1] = selected_es;
+        matrix[j + 1] = matrix[i];
     }
+}
 
-    delete[] keys;
+size_t binarySearch(int *array, size_t dimension, int item,
+                    size_t low, size_t high) {
+    if (high <= low) {
+        return (item > array[low]) ? (low + 1) : low;
+    }
+    size_t mid = (low + high) / 2;
+    if (item == array[mid]) {
+        return mid + 1;
+    }
+    if (item > array[mid]) {
+        return binarySearch(array, dimension, item, mid + 1, high);
+    }
+    return binarySearch(array, dimension, item, low, mid - 1);
+}
+
+void binaryInsertionSort(int *array, size_t dimension) {
+    for (size_t i = 1; i < dimension; ++i) {
+        size_t j = i - 1;
+        int selected = array[i];
+        size_t index = binarySearch(array, dimension, selected, 0, j);
+        while (j >= index)
+        {
+            array[j + 1] = array[j];
+            --j;
+        }
+        array[j + 1] = array[i];
+    }
+}
+
+void binaryInsertionSort(BasicMatrix basic) {
+    switch (basic.currentType) {
+        case USUAL:
+            binaryInsertionSort(basic.usual->matrix, basic.dimension);
+            break;
+        case DIAGONAL:
+            binaryInsertionSort(basic.diagonal->matrix, basic.dimension);
+            break;
+        case TRIANGULAR:
+            int **matrix = convertToTwoDimensional(basic.triangular->matrix, basic.dimension);
+            binaryInsertionSort(matrix, basic.dimension);
+            basic.triangular->matrix = convertToArray(matrix, basic.dimension);
+            break;
+    }
 }
