@@ -7,4 +7,6 @@ struct UsualMatrix {
     int **matrix;
 };
 
+void printMatrix(int **matrix);
+
 #endif

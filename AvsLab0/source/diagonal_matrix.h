@@ -5,6 +5,6 @@ struct DiagonalMatrix {
     int *matrix;
 };
 
-void printMatrix(int *matrix);
+void printMatrix(int *matrix, int dimension);
 
 #endif

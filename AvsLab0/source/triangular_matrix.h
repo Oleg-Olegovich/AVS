@@ -2,7 +2,9 @@
 #define AVS_TRIANGULAR_MATRIX_H
 
 struct TriangularMatrix {
-    int **matrix;
+    int *matrix;
 };
+
+void printMatrix(int *matrix, int dimension);
 
 #endif
