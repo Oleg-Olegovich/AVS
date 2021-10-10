@@ -2,6 +2,7 @@
 #define AVS_TRIANGULAR_MATRIX_H
 
 struct TriangularMatrix {
+    // Значения матрицы записываются в одномерный массив построчно.
     int *matrix;
 };
 
