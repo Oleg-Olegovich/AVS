@@ -1,17 +1,32 @@
 #include "in_out_functions.h"
 
 int readInteger(FILE *file, int *number) {
-    fscanf(file, "%u", *number);
+    char *input, *end;
+    fscanf(file, "%s", input);
+    *number = strtoul(input, &end, 10);
+    if (errno == ERANGE) {
+        return 0;
+    }
     return 1;
 }
 
 int readDimension(FILE *file, size_t *number) {
-    fscanf(file, "%u", *number);
+    char *input, *end;
+    fscanf(file, "%s", input);
+    *number = strtoull(input, &end, 10);
+    if (errno == ERANGE) {
+        return 0;
+    }
     return 1;
 }
 
 int readNumber(FILE *file, double *number) {
-    fscanf(file, "%f", *number);
+    char *input, *end;
+    fscanf(file, "%s", input);
+    *number = strtold(input, &end);
+    if (errno == ERANGE) {
+        return 0;
+    }
     return 1;
 }
 

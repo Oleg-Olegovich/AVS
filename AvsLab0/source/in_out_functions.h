@@ -6,6 +6,7 @@
 #include "stdint.h"
 #include "float.h"
 #include "time.h"
+#include <errno.h>
 #include "basic_matrix.h"
 
 int readInteger(FILE *file, int *number);

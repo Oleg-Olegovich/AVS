@@ -9,22 +9,21 @@ int fileExists(char *filename) {
 }
 
 int fileProcessing(char* input_path, char* output_path) {
-    FILE *input = fopen(input_path, "w");
-    FILE *output = fopen(output_path, "r");
-    int *type;
-    if (readInteger(input, type) == 0) {
+    FILE *input = fopen(input_path, "r");
+    FILE *output = fopen(output_path, "w");
+    int type;
+    if (readInteger(input, &type) == 0) {
         printInvalidTypeError();
         return 1;
     }
-    int *dimension;
-    if (readInteger(input, dimension) == 0) {
+    struct BasicMatrix base;
+    if (readInteger(input, &base.dimension) == 0) {
         printInvalideDimensionError();
         return 1;
     }
-    struct BasicMatrix base;
-    base.dimension = *dimension;
-    switch (*type) {
+    switch (type) {
         case 0:
+            int **m = malloc(base.dimension * sizeof(*m));
             base.usual->matrix = malloc(base.dimension * sizeof(*(base.usual->matrix)));
             for (size_t i = 0; i < base.dimension; ++i) {
                 base.usual->matrix[i] = malloc(base.dimension * sizeof(**(base.usual->matrix)));
@@ -77,7 +76,7 @@ int fileProcessing(char* input_path, char* output_path) {
 }
 
 int generateProcessing(char *matrix_type, char *output_path) {
-    FILE *output = fopen(output_path, "r");
+    FILE *output = fopen(output_path, "w");
     int type = matrix_type[0] - '0';
     struct BasicMatrix base;
     switch (type) {

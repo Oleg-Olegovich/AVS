@@ -34,8 +34,7 @@ void binaryInsertionSortMatrix(double **matrix, size_t dimension) {
         size_t j = i - 1;
         long double selected_mean = calculateArithmeticMean(matrix[i], dimension);
         size_t index = binarySearchInMatrix(matrix, dimension, selected_mean, 0, j);
-        while (j >= index)
-        {
+        while (j >= index) {
             matrix[j + 1] = matrix[j];
             if (j == 0) {
                 break;
