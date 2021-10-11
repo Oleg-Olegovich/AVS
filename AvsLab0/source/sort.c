@@ -2,7 +2,7 @@
 
 const long double eps = 1e-8;
 
-long double calculateArithmeticMean(const int *array, size_t dimension) {
+long double calculateArithmeticMean(const double *array, size_t dimension) {
     // Используется тип с максимальной вместимостью, так как
     // в массиве может быть любое число элементов.
     long double result = 0;
@@ -12,7 +12,7 @@ long double calculateArithmeticMean(const int *array, size_t dimension) {
     return result / dimension;
 }
 
-size_t binarySearchInMatrix(int **matrix, size_t dimension, long double mean,
+size_t binarySearchInMatrix(double **matrix, size_t dimension, long double mean,
                     size_t low, size_t high) {
     if (high <= low) {
         return (mean > calculateArithmeticMean(matrix[low], dimension))
@@ -29,7 +29,7 @@ size_t binarySearchInMatrix(int **matrix, size_t dimension, long double mean,
     return binarySearchInMatrix(matrix, dimension, mean, low, mid - 1);
 }
 
-void binaryInsertionSortMatrix(int **matrix, size_t dimension) {
+void binaryInsertionSortMatrix(double **matrix, size_t dimension) {
     for (size_t i = 1; i < dimension; ++i) {
         size_t j = i - 1;
         long double selected_mean = calculateArithmeticMean(matrix[i], dimension);
@@ -43,7 +43,7 @@ void binaryInsertionSortMatrix(int **matrix, size_t dimension) {
     }
 }
 
-size_t binarySearchInArray(int *array, size_t dimension, int item,
+size_t binarySearchInArray(double *array, size_t dimension, double item,
                     size_t low, size_t high) {
     if (high <= low) {
         return (item > array[low]) ? (low + 1) : low;
@@ -58,10 +58,10 @@ size_t binarySearchInArray(int *array, size_t dimension, int item,
     return binarySearchInArray(array, dimension, item, low, mid - 1);
 }
 
-void binaryInsertionSortArray(int *array, size_t dimension) {
+void binaryInsertionSortArray(double *array, size_t dimension) {
     for (size_t i = 1; i < dimension; ++i) {
         size_t j = i - 1;
-        int selected = array[i];
+        double selected = array[i];
         size_t index = binarySearchInArray(array, dimension, selected, 0, j);
         while (j >= index)
         {
@@ -81,7 +81,7 @@ void binaryInsertionSort(struct BasicMatrix basic) {
             binaryInsertionSortArray(basic.diagonal->matrix, basic.dimension);
             break;
         case TRIANGULAR:
-            int **matrix = convertToTwoDimensional(basic.triangular->matrix, basic.dimension);
+            double **matrix = convertToTwoDimensional(basic.triangular->matrix, basic.dimension);
             binaryInsertionSortMatrix(matrix, basic.dimension);
             basic.triangular->matrix = convertToArray(matrix, basic.dimension);
             break;

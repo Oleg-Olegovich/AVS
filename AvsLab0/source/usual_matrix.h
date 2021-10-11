@@ -1,10 +1,10 @@
 #ifndef AVS_USUAL_MATRIX_H
 #define AVS_USUAL_MATRIX_H
 
-#include <stdint.h>
+#include "float.h"
 
 struct UsualMatrix {
-    int **matrix;
+    double **matrix;
 };
 
 #endif

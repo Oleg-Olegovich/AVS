@@ -4,7 +4,7 @@
 #include "stddef.h"
 
 struct DiagonalMatrix {
-    int *matrix;
+    double *matrix;
 };
 
 #endif

@@ -3,15 +3,14 @@
 
 #include "stdlib.h"
 #include "stddef.h"
-#include "stdint.h"
 
 struct TriangularMatrix {
     // Значения матрицы записываются в одномерный массив построчно.
-    int *matrix;
+    double *matrix;
 };
 
-int** convertToTwoDimensional(int *array, size_t dimension);
+double** convertToTwoDimensional(double *array, size_t dimension);
 
-int* convertToArray(int **matrix, size_t dimension);
+double* convertToArray(double **matrix, size_t dimension);
 
 #endif
