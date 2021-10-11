@@ -14,7 +14,7 @@ double** convertToTwoDimensional(double *array, size_t dimension) {
 }
 
 double* convertToArray(double **matrix, size_t dimension) {
-    double *array = malloc(dimension * (dimension - 1) / 2 * sizeof(*matrix));
+    double *array = malloc(dimension * (dimension - 1) / 2 * sizeof(*array));
     for (size_t i = 1, index = 0; i < dimension; ++i) {
         for (size_t j = 0; j < i; ++j) {
             array[index++] = matrix[i][j];

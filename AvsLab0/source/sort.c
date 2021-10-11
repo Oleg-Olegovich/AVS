@@ -37,6 +37,9 @@ void binaryInsertionSortMatrix(double **matrix, size_t dimension) {
         while (j >= index)
         {
             matrix[j + 1] = matrix[j];
+            if (j == 0) {
+                break;
+            }
             --j;
         }
         matrix[j + 1] = matrix[i];
@@ -83,7 +86,12 @@ void binaryInsertionSort(struct BasicMatrix basic) {
         case TRIANGULAR:
             double **matrix = convertToTwoDimensional(basic.triangular->matrix, basic.dimension);
             binaryInsertionSortMatrix(matrix, basic.dimension);
+            free(basic.triangular->matrix);
             basic.triangular->matrix = convertToArray(matrix, basic.dimension);
+            for (int i = 0; i < basic.dimension; ++i) {
+                free(*matrix);
+            }
+            free(matrix);
             break;
     }
 }
