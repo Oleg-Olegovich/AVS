@@ -40,44 +40,63 @@ int readNumericMatrix(double **matrix) {
 }
 
 double generateNumber() {
-    //return rand();
+    srand(time(0));
+    return -100.0 + 201.0 * rand();
 }
 
-void printDiagonalMatrix(char *filepath, double *matrix, size_t dimension) {
+struct BasicMatrix generateMatrix() {
+    struct BasicMatrix basic;
+    basic.currentType = USUAL;
+    srand(time(0));
+    basic.dimension = 1 + rand() % 10;
+    double **matrix = malloc(basic.dimension * sizeof(*matrix));
+    for (int i = 0; i < basic.dimension; ++i) {
+        matrix[i] = malloc(basic.dimension * sizeof(**matrix));
+        for (int j = 0; j < basic.dimension; ++j) {
+            matrix[i][j] = generateNumber();
+        }
+    }
+    basic.usual->matrix = matrix;
+    return basic;
+}
+
+struct DiagonalMatrix generateDiagonalMatrix() {
+    srand(time(0));
+    int dimension = 1 + rand() % 10;
+}
+
+struct TriangularMatrix generateTriangularMatrix() {
+    srand(time(0));
+    int dimension = 1 + rand() % 10;
+}
+
+void printMatrix(FILE *file, double **matrix) {
+    while (*matrix) {
+        while (**matrix) {
+            fprintf(file, "%lf", **matrix++);
+        }
+        fprintf(file, "%c", '\n');
+        ++matrix;
+    }
+}
+
+void printDiagonalMatrix(FILE *file, double *matrix, size_t dimension) {
     for (size_t i = 0; i < dimension; ++i) {
         for (size_t j = 0; j < dimension; ++j) {
-            if (i == j) {
-                //    std::cout << matrix[i] << ' ';
-            } else {
-                //    std::cout << "0 ";
-            }
+            fprintf(file, "%lf", (i == j ? matrix[i] : '0'));
         }
-        //cout << '\n';
+        fprintf(file, "%c", '\n');
     }
 }
 
-void printArray(char *filepath, double *array) {
-    while (*array) {
-        //    std::cout << *array++ << ' ';
-    }
-    //std::cout << '\n';
-}
-
-void printMatrix(char *filepath, double **matrix) {
-    while (*matrix) {
-        printArray(filepath, *matrix++);
-    }
-}
-
-void printTriangularMatrix(char *file_path, double *matrix, size_t dimension) {
-    FILE *file = fopen(file_path, "w");
+void printTriangularMatrix(FILE *file, double *matrix, size_t dimension) {
     size_t start_index_row = 0;
     for (size_t i = 0; i < dimension; ++i) {
         for (size_t j = 0; j < dimension; ++j) {
             fprintf(file, "%lf", (j < i ? matrix[start_index_row + j] : '0'));
         }
         start_index_row += i;
-        fprintf(file, "%с", '\n');
+        fprintf(file, "%c", '\n');
     }
 }
 
@@ -104,7 +123,7 @@ void printNonexistentFileError(char *file_path) {
 
 void printInvalidTypeError() {
     printf("Invalid matrix type!\n");
-    printf("Expected: \"usual\", \"diagonal\" or \"triangular\".\n");
+    printf("Expected: \"0\" - usual, \"1\" - diagonal or \"2\" - triangular.\n");
 }
 
 void printOkMessage(char *file_path) {
