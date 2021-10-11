@@ -12,9 +12,9 @@ enum MatrixType {
 struct BasicMatrix {
     enum MatrixType currentType;
     union {
-        UsualMatrix* usual;
-        DiagonalMatrix* diagonal;
-        TriangularMatrix* triangular;
+        struct UsualMatrix* usual;
+        struct DiagonalMatrix* diagonal;
+        struct TriangularMatrix* triangular;
     };
     size_t dimension;
 };
