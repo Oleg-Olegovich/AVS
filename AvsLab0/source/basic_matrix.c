@@ -3,20 +3,13 @@
 void initialize(struct BasicMatrix *base) {
     switch (base->currentType) {
         case USUAL:
-            base->usual = malloc(sizeof(&base->usual));
-            base->usual->matrix = malloc(base->dimension * sizeof(*(base->usual->matrix)));
-            for (size_t i = 0; i < base->dimension; ++i) {
-                base->usual->matrix[i] = malloc(base->dimension * sizeof(**(base->usual->matrix)));
-            }
+            initializeUsual(base->usual, base->dimension);
             break;
         case DIAGONAL:
-            base->diagonal = malloc(sizeof(&base->diagonal));
-            base->diagonal->matrix = malloc(base->dimension * sizeof(*(base->diagonal->matrix)));
+            initializeDiagonal(base->diagonal, base->dimension);
             break;
         case TRIANGULAR:
-            base->triangular = malloc(sizeof(&base->triangular));
-            size_t size = base->dimension * (base->dimension - 1) / 2;
-            base->triangular->matrix = malloc(size * sizeof(*(base->triangular->matrix)));
+            initializeTriangular(base->triangular, base->dimension);
             break;
     }
 }
@@ -24,19 +17,13 @@ void initialize(struct BasicMatrix *base) {
 void clear(struct BasicMatrix *base) {
     switch (base->currentType) {
         case USUAL:
-            for (size_t i = 0; i < base->dimension; ++i) {
-                free(base->usual->matrix[i]);
-            }
-            free(base->usual->matrix);
-            free(base->usual);
+            clearUsual(base->usual, base->dimension);
             break;
         case DIAGONAL:
-            free(base->diagonal->matrix);
-            free(base->diagonal);
+            clearDiagonal(base->diagonal);
             break;
         case TRIANGULAR:
-            free(base->triangular->matrix);
-            free(base->triangular);
+            clearTriangular(base->triangular);
             break;
     }
 }

@@ -14,11 +14,15 @@ int fileProcessing(char* input_path, char* output_path) {
     int type;
     if (readInteger(input, &type) == 0) {
         printInvalidTypeError();
+        fclose(input);
+        fclose(output);
         return 1;
     }
     struct BasicMatrix base;
     if (readDimension(input, &base.dimension) == 0) {
         printInvalideDimensionError();
+        fclose(input);
+        fclose(output);
         return 1;
     }
     switch (type) {
@@ -26,6 +30,9 @@ int fileProcessing(char* input_path, char* output_path) {
             base.currentType = USUAL;
             initialize(&base);
             if (readNumericMatrix(input, base.usual->matrix, base.dimension) == 0) {
+                clear(&base);
+                fclose(input);
+                fclose(output);
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");
@@ -38,6 +45,9 @@ int fileProcessing(char* input_path, char* output_path) {
             base.currentType = DIAGONAL;
             initialize(&base);
             if (readNumericArray(input, base.diagonal->matrix, base.dimension) == 0) {
+                clear(&base);
+                fclose(input);
+                fclose(output);
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");
@@ -51,6 +61,9 @@ int fileProcessing(char* input_path, char* output_path) {
             initialize(&base);
             if (readNumericArray(input, base.triangular->matrix,
                                  base.dimension * (base.dimension - 1) / 2) == 0) {
+                clear(&base);
+                fclose(input);
+                fclose(output);
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");

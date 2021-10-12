@@ -1,5 +1,16 @@
 #include "triangular_matrix.h"
 
+void initializeTriangular(struct TriangularMatrix *triangular, size_t dimension) {
+    triangular = malloc(sizeof(*triangular));
+    size_t size = dimension * (dimension - 1) / 2;
+    triangular->matrix = malloc(size * sizeof(*(triangular->matrix)));
+}
+
+void clearTriangular(struct TriangularMatrix *triangular) {
+    free(triangular->matrix);
+    free(triangular);
+}
+
 double** convertToTwoDimensional(double *array, size_t dimension) {
     double **matrix = malloc(dimension * sizeof(*matrix));
     size_t start_index_row = 0;
