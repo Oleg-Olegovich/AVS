@@ -6,10 +6,10 @@ void initialize(struct BasicMatrix *base) {
             initializeUsual(&base->usual, base->dimension);
             break;
         case DIAGONAL:
-            initializeDiagonal(base->diagonal, base->dimension);
+            initializeDiagonal(&base->diagonal, base->dimension);
             break;
         case TRIANGULAR:
-            initializeTriangular(base->triangular, base->dimension);
+            initializeTriangular(&base->triangular, base->dimension);
             break;
     }
 }
@@ -20,10 +20,10 @@ void clear(struct BasicMatrix *base) {
             clearUsual(&base->usual, base->dimension);
             break;
         case DIAGONAL:
-            clearDiagonal(base->diagonal);
+            clearDiagonal(&base->diagonal);
             break;
         case TRIANGULAR:
-            clearTriangular(base->triangular);
+            clearTriangular(&base->triangular);
             break;
     }
     free(base);
@@ -40,8 +40,8 @@ struct BasicMatrix* generateMatrix() {
     srand(time(0));
     base->dimension = 1 + rand() % 10;
     initialize(base);
-    for (size_t i = 0; i < base->dimension; ++i) {
-        for (size_t j = 0; j < base->dimension; ++j) {
+    for (long long i = 0; i < base->dimension; ++i) {
+        for (long long j = 0; j < base->dimension; ++j) {
             base->usual->matrix[i][j] = generateNumber();
         }
     }
@@ -54,7 +54,7 @@ struct BasicMatrix* generateDiagonalMatrix() {
     srand(time(0));
     base->dimension = 1 + rand() % 10;
     initialize(&base);
-    for (size_t i = 0; i < base->dimension; ++i) {
+    for (long long i = 0; i < base->dimension; ++i) {
         base->diagonal->matrix[i] = generateNumber();
     }
     return base;
@@ -66,8 +66,8 @@ struct BasicMatrix* generateTriangularMatrix() {
     srand(time(0));
     base->dimension = 1 + rand() % 10;
     initialize(&base);
-    size_t size = base->dimension * (base->dimension - 1) / 2;
-    for (size_t i = 0; i < size; ++i) {
+    long long size = base->dimension * (base->dimension - 1) / 2;
+    for (long long i = 0; i < size; ++i) {
         base->triangular->matrix[i] = generateNumber();
     }
     return base;

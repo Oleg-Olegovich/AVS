@@ -16,6 +16,7 @@ int fileProcessing(char* input_path, char* output_path) {
         printInvalidTypeError();
         fclose(input);
         fclose(output);
+        free(output_path);
         return 1;
     }
     struct BasicMatrix* base = (struct BasicMatrix*) malloc(sizeof(struct BasicMatrix));
@@ -23,6 +24,7 @@ int fileProcessing(char* input_path, char* output_path) {
         printInvalideDimensionError();
         fclose(input);
         fclose(output);
+        free(output_path);
         return 1;
     }
     switch (type) {
@@ -34,6 +36,7 @@ int fileProcessing(char* input_path, char* output_path) {
                 clear(base);
                 fclose(input);
                 fclose(output);
+                free(output_path);
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");
@@ -50,6 +53,7 @@ int fileProcessing(char* input_path, char* output_path) {
                 clear(base);
                 fclose(input);
                 fclose(output);
+                free(output_path);
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");
@@ -67,6 +71,7 @@ int fileProcessing(char* input_path, char* output_path) {
                 clear(base);
                 fclose(input);
                 fclose(output);
+                free(output_path);
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");
@@ -79,12 +84,14 @@ int fileProcessing(char* input_path, char* output_path) {
             printInvalidTypeError();
             fclose(input);
             fclose(output);
+            free(output_path);
             return 1;
     }
-    printOkMessage(output_path);
     clear(base);
     fclose(input);
     fclose(output);
+    printOkMessage(output_path);
+    free(output_path);
     return 0;
 }
 
@@ -120,11 +127,13 @@ int generateProcessing(const char *matrix_type, char *output_path) {
         default:
             printInvalidTypeError();
             fclose(output);
+            free(output_path);
             return 1;
     }
-    printOkMessage(output_path);
     clear(base);
     fclose(output);
+    printOkMessage(output_path);
+    free(output_path);
     return 0;
 }
 
@@ -137,15 +146,17 @@ int main(int argc, char* argv[]) {
         printNonexistentFileError(argv[3]);
         return 1;
     }
+    char *output_path = (char*)malloc(strlen(argv[3]) * sizeof(char));
+    strcpy(output_path, argv[3]);
     if (strcmp(argv[1], "-f") == 0) {
         if (fileExists(argv[2]) == 0) {
             printNonexistentFileError(argv[2]);
             return 1;
         }
-        return fileProcessing(argv[2], argv[3]);
+        return fileProcessing(argv[2], output_path);
     }
     if (strcmp(argv[1], "-r") == 0) {
-        return generateProcessing(argv[2], argv[3]);
+        return generateProcessing(argv[2], output_path);
     }
     printInvalideCommandLineError();
     return 1;

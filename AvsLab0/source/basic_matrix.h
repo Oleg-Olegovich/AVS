@@ -17,7 +17,7 @@ struct BasicMatrix {
         struct DiagonalMatrix* diagonal;
         struct TriangularMatrix* triangular;
     };
-    size_t dimension;
+    long long dimension;
 };
 
 void initialize(struct BasicMatrix *base);

@@ -9,13 +9,13 @@
 #include "basic_matrix.h"
 
 int readInteger(FILE *file, int *number);
-int readDimension(FILE *file, size_t *number);
+int readDimension(FILE *file, long long *number);
 int readNumber(FILE *file, double *number);
-int readNumericArray(FILE *file, double *array, size_t dimension);
-int readNumericMatrix(FILE *file, double **matrix, size_t dimension);
-void printMatrix(FILE *file, double **, size_t dimension);
-void printDiagonalMatrix(FILE *file, double *matrix, size_t dimension);
-void printTriangularMatrix(FILE *file, double *matrix, size_t dimension);
+int readNumericArray(FILE *file, double *array, long long dimension);
+int readNumericMatrix(FILE *file, double **matrix, long long dimension);
+void printMatrix(FILE *file, double **, long long dimension);
+void printDiagonalMatrix(FILE *file, double *matrix, long long dimension);
+void printTriangularMatrix(FILE *file, double *matrix, long long dimension);
 void printInvalideNumberError();
 void printInvalideDimensionError();
 void printInvalideCommandLineError();

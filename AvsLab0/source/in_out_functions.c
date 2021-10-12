@@ -1,7 +1,7 @@
 #include "in_out_functions.h"
 
 int readInteger(FILE *file, int *number) {
-    char *input = NULL, *end;
+    char *input[11], *end;
     fscanf(file, "%s", input);
     *number = (int)strtoul(input, &end, 10);
     if (errno == ERANGE) {
@@ -10,8 +10,8 @@ int readInteger(FILE *file, int *number) {
     return 1;
 }
 
-int readDimension(FILE *file, size_t *number) {
-    char *input = NULL, *end;
+int readDimension(FILE *file, long long *number) {
+    char *input[21], *end;
     fscanf(file, "%s", input);
     *number = strtoull(input, &end, 10);
     if (errno == ERANGE) {
@@ -21,7 +21,7 @@ int readDimension(FILE *file, size_t *number) {
 }
 
 int readNumber(FILE *file, double *number) {
-    char *input = NULL, *end;
+    char *input[DBL_MAX_10_EXP + 3], *end;
     fscanf(file, "%s", input);
     *number = (double)strtold(input, &end);
     if (errno == ERANGE) {
@@ -30,8 +30,8 @@ int readNumber(FILE *file, double *number) {
     return 1;
 }
 
-int readNumericArray(FILE *file, double *array, size_t dimension) {
-    for (size_t i = 0; i < dimension; ++i) {
+int readNumericArray(FILE *file, double *array, long long dimension) {
+    for (long long i = 0; i < dimension; ++i) {
         if (readNumber(file, &array[i]) == 0) {
             return 0;
         }
@@ -39,9 +39,9 @@ int readNumericArray(FILE *file, double *array, size_t dimension) {
     return 1;
 }
 
-int readNumericMatrix(FILE *file, double **matrix, size_t dimension) {
-    for (size_t i = 0; i < dimension; ++i) {
-        for (size_t j = 0; j < dimension; ++j) {
+int readNumericMatrix(FILE *file, double **matrix, long long dimension) {
+    for (long long i = 0; i < dimension; ++i) {
+        for (long long j = 0; j < dimension; ++j) {
             if (readNumber(file, &matrix[i][j]) == 0) {
                 return 0;
             }
@@ -50,7 +50,7 @@ int readNumericMatrix(FILE *file, double **matrix, size_t dimension) {
     return 1;
 }
 
-void printMatrix(FILE *file, double **matrix, size_t dimension) {
+void printMatrix(FILE *file, double **matrix, long long dimension) {
     for (int i = 0; i < dimension; ++i) {
         for (int j = 0; j < dimension; ++j) {
             fprintf(file, "%lf", matrix[i][j]);
@@ -60,20 +60,20 @@ void printMatrix(FILE *file, double **matrix, size_t dimension) {
     }
 }
 
-void printDiagonalMatrix(FILE *file, double *matrix, size_t dimension) {
-    for (size_t i = 0; i < dimension; ++i) {
-        for (size_t j = 0; j < dimension; ++j) {
-            fprintf(file, "%lf", (i == j ? matrix[i] : '0'));
+void printDiagonalMatrix(FILE *file, double *matrix, long long dimension) {
+    for (long long i = 0; i < dimension; ++i) {
+        for (long long j = 0; j < dimension; ++j) {
+            fprintf(file, "%lf", (i == j ? matrix[i] : 0));
             fprintf(file, "%c", ' ');
         }
         fprintf(file, "%c", '\n');
     }
 }
 
-void printTriangularMatrix(FILE *file, double *matrix, size_t dimension) {
-    size_t start_index_row = 0;
-    for (size_t i = 0; i < dimension; ++i) {
-        for (size_t j = 0; j < dimension; ++j) {
+void printTriangularMatrix(FILE *file, double *matrix, long long dimension) {
+    long long start_index_row = 0;
+    for (long long i = 0; i < dimension; ++i) {
+        for (long long j = 0; j < dimension; ++j) {
             fprintf(file, "%lf", (j < i ? matrix[start_index_row + j] : '0'));
             fprintf(file, "%c", ' ');
         }
