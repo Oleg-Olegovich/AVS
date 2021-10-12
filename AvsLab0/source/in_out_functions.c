@@ -13,20 +13,30 @@ int readInteger(FILE *file, int *number) {
 int readDimension(FILE *file, long long *number) {
     char *input[21], *end;
     fscanf(file, "%s", input);
-    *number = strtoull(input, &end, 10);
-    if (errno == ERANGE) {
+    *number = strtoll(input, &end, 10);
+    if (errno == ERANGE || *number < 1) {
         return 0;
     }
     return 1;
 }
 
 int readNumber(FILE *file, double *number) {
-    char *input[DBL_MAX_10_EXP + 3], *end;
+    char *input, *end;
+    input = malloc((DBL_MAX_10_EXP + 3) * sizeof(char));
     fscanf(file, "%s", input);
-    *number = (double)strtold(input, &end);
+    *number = (double)strtod(input, &end);
     if (errno == ERANGE) {
         return 0;
     }
+    if (*number == 0) {
+        for (int i = 0; i < DBL_MAX_10_EXP + 3; ++i) {
+            if (input[i] != '0' && input[i] != '.') {
+                free(input);
+                return 0;
+            }
+        }
+    }
+    free(input);
     return 1;
 }
 
