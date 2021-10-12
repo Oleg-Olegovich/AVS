@@ -61,6 +61,8 @@ int fileProcessing(char* input_path, char* output_path) {
             break;
         default:
             printInvalidTypeError();
+            fclose(input);
+            fclose(output);
             return 1;
     }
     clear(&base);
@@ -103,8 +105,10 @@ int generateProcessing(char *matrix_type, char *output_path) {
             break;
         default:
             printInvalidTypeError();
+            fclose(output);
             return 1;
     }
+    fclose(output);
     return 0;
 }
 

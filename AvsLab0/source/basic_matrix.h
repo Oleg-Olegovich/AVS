@@ -1,6 +1,7 @@
 #ifndef AVS_BASIC_MATRIX_H
 #define AVS_BASIC_MATRIX_H
 
+#include "time.h"
 #include "usual_matrix.h"
 #include "diagonal_matrix.h"
 #include "triangular_matrix.h"
@@ -21,5 +22,9 @@ struct BasicMatrix {
 
 void initialize(struct BasicMatrix *base);
 void clear(struct BasicMatrix *base);
+double generateNumber();
+struct BasicMatrix generateMatrix();
+struct BasicMatrix generateDiagonalMatrix();
+struct BasicMatrix generateTriangularMatrix();
 
 #endif

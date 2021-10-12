@@ -34,3 +34,51 @@ void clear(struct BasicMatrix *base) {
             break;
     }
 }
+
+double generateNumber() {
+    srand(time(0));
+    return -100.0 + 201.0 * rand();
+}
+
+struct BasicMatrix generateMatrix() {
+    struct BasicMatrix basic;
+    basic.currentType = USUAL;
+    srand(time(0));
+    basic.dimension = 1 + rand() % 10;
+    double **matrix = malloc(basic.dimension * sizeof(*matrix));
+    for (size_t i = 0; i < basic.dimension; ++i) {
+        matrix[i] = malloc(basic.dimension * sizeof(**matrix));
+        for (size_t j = 0; j < basic.dimension; ++j) {
+            matrix[i][j] = generateNumber();
+        }
+    }
+    basic.usual->matrix = matrix;
+    return basic;
+}
+
+struct BasicMatrix generateDiagonalMatrix() {
+    struct BasicMatrix basic;
+    basic.currentType = DIAGONAL;
+    srand(time(0));
+    basic.dimension = 1 + rand() % 10;
+    double *matrix = malloc(basic.dimension * sizeof(*matrix));
+    for (size_t i = 0; i < basic.dimension; ++i) {
+        matrix[i] = generateNumber();
+    }
+    basic.diagonal->matrix = matrix;
+    return basic;
+}
+
+struct BasicMatrix generateTriangularMatrix() {
+    struct BasicMatrix basic;
+    basic.currentType = TRIANGULAR;
+    srand(time(0));
+    basic.dimension = 1 + rand() % 10;
+    size_t size = basic.dimension * (basic.dimension - 1) / 2;
+    double *matrix = malloc(size * sizeof(*matrix));
+    for (size_t i = 0; i < size; ++i) {
+        matrix[i] = generateNumber();
+    }
+    basic.triangular->matrix = matrix;
+    return basic;
+}
