@@ -10,9 +10,9 @@ struct TriangularMatrix {
     double *matrix;
 };
 
-void initializeTriangular(struct TriangularMatrix *triangular, size_t dimension);
-void clearTriangular(struct TriangularMatrix *triangular);
-double** convertToTwoDimensional(double *array, size_t dimension);
+void initializeTriangular(struct TriangularMatrix **triangular, size_t dimension);
+void clearTriangular(struct TriangularMatrix **triangular);
+double** convertToTwoDimensional(const double *array, size_t dimension);
 double* convertToArray(double **matrix, size_t dimension);
 
 #endif

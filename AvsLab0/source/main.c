@@ -18,8 +18,8 @@ int fileProcessing(char* input_path, char* output_path) {
         fclose(output);
         return 1;
     }
-    struct BasicMatrix base;
-    if (readDimension(input, &base.dimension) == 0) {
+    struct BasicMatrix* base = (struct BasicMatrix*) malloc(sizeof(struct BasicMatrix));
+    if (readDimension(input, &(base->dimension)) == 0) {
         printInvalideDimensionError();
         fclose(input);
         fclose(output);
@@ -27,50 +27,53 @@ int fileProcessing(char* input_path, char* output_path) {
     }
     switch (type) {
         case 0:
-            base.currentType = USUAL;
-            initialize(&base);
-            if (readNumericMatrix(input, base.usual->matrix, base.dimension) == 0) {
-                clear(&base);
+            base->currentType = USUAL;
+            initialize(base);
+            if (readNumericMatrix(input, base->usual->matrix, base->dimension) == 0) {
+                printInvalideNumberError();
+                clear(base);
                 fclose(input);
                 fclose(output);
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");
-            printMatrix(output, base.usual->matrix, base.dimension);
+            printMatrix(output, base->usual->matrix, base->dimension);
             fprintf(output, "%s", "Matrix after sorting:\n");
             binaryInsertionSort(base);
-            printMatrix(output, base.usual->matrix, base.dimension);
+            printMatrix(output, base->usual->matrix, base->dimension);
             break;
         case 1:
-            base.currentType = DIAGONAL;
-            initialize(&base);
-            if (readNumericArray(input, base.diagonal->matrix, base.dimension) == 0) {
-                clear(&base);
+            base->currentType = DIAGONAL;
+            initialize(base);
+            if (readNumericArray(input, base->diagonal->matrix, base->dimension) == 0) {
+                printInvalideNumberError();
+                clear(base);
                 fclose(input);
                 fclose(output);
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");
-            printDiagonalMatrix(output, base.diagonal->matrix, base.dimension);
+            printDiagonalMatrix(output, base->diagonal->matrix, base->dimension);
             fprintf(output, "%s", "Matrix after sorting:\n");
             binaryInsertionSort(base);
-            printDiagonalMatrix(output, base.diagonal->matrix, base.dimension);
+            printDiagonalMatrix(output, base->diagonal->matrix, base->dimension);
             break;
         case 2:
-            base.currentType = TRIANGULAR;
-            initialize(&base);
-            if (readNumericArray(input, base.triangular->matrix,
-                                 base.dimension * (base.dimension - 1) / 2) == 0) {
-                clear(&base);
+            base->currentType = TRIANGULAR;
+            initialize(base);
+            if (readNumericArray(input, base->triangular->matrix,
+                                 base->dimension * (base->dimension - 1) / 2) == 0) {
+                printInvalideNumberError();
+                clear(base);
                 fclose(input);
                 fclose(output);
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");
-            printTriangularMatrix(output, base.triangular->matrix, base.dimension);
+            printTriangularMatrix(output, base->triangular->matrix, base->dimension);
             fprintf(output, "%s", "Matrix after sorting:\n");
             binaryInsertionSort(base);
-            printTriangularMatrix(output, base.triangular->matrix, base.dimension);
+            printTriangularMatrix(output, base->triangular->matrix, base->dimension);
             break;
         default:
             printInvalidTypeError();
@@ -78,49 +81,49 @@ int fileProcessing(char* input_path, char* output_path) {
             fclose(output);
             return 1;
     }
-    clear(&base);
+    printOkMessage(output_path);
+    clear(base);
     fclose(input);
     fclose(output);
     return 0;
 }
 
-int generateProcessing(char *matrix_type, char *output_path) {
+int generateProcessing(const char *matrix_type, char *output_path) {
     FILE *output = fopen(output_path, "w");
     int type = matrix_type[0] - '0';
-    struct BasicMatrix base;
+    struct BasicMatrix* base;
     switch (type) {
         case 0:
             base = generateMatrix();
             fprintf(output, "%s", "Matrix before sorting:\n");
-            printMatrix(output, base.usual->matrix, base.dimension);
+            printMatrix(output, base->usual->matrix, base->dimension);
             fprintf(output, "%s", "Matrix after sorting:\n");
             binaryInsertionSort(base);
-            printMatrix(output, base.usual->matrix, base.dimension);
-            free(base.usual->matrix);
+            printMatrix(output, base->usual->matrix, base->dimension);
             break;
         case 1:
             base = generateDiagonalMatrix();
             fprintf(output, "%s", "Matrix before sorting:\n");
-            printDiagonalMatrix(output, base.diagonal->matrix, base.dimension);
+            printDiagonalMatrix(output, base->diagonal->matrix, base->dimension);
             fprintf(output, "%s", "Matrix after sorting:\n");
             binaryInsertionSort(base);
-            printDiagonalMatrix(output, base.diagonal->matrix, base.dimension);
-            free(base.diagonal->matrix);
+            printDiagonalMatrix(output, base->diagonal->matrix, base->dimension);
             break;
         case 2:
             base = generateTriangularMatrix();
             fprintf(output, "%s", "Matrix before sorting:\n");
-            printTriangularMatrix(output, base.triangular->matrix, base.dimension);
+            printTriangularMatrix(output, base->triangular->matrix, base->dimension);
             fprintf(output, "%s", "Matrix after sorting:\n");
             binaryInsertionSort(base);
-            printTriangularMatrix(output, base.triangular->matrix, base.dimension);
-            free(base.triangular->matrix);
+            printTriangularMatrix(output, base->triangular->matrix, base->dimension);
             break;
         default:
             printInvalidTypeError();
             fclose(output);
             return 1;
     }
+    printOkMessage(output_path);
+    clear(base);
     fclose(output);
     return 0;
 }

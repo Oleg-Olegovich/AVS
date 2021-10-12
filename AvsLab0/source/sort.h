@@ -17,6 +17,6 @@ size_t binarySearchInArray(double *array, size_t dimension, double item,
 
 void binaryInsertionSortArray(double *array, size_t dimension);
 
-void binaryInsertionSort(struct BasicMatrix basic);
+void binaryInsertionSort(struct BasicMatrix *basic);
 
 #endif

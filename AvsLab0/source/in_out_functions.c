@@ -1,9 +1,9 @@
 #include "in_out_functions.h"
 
 int readInteger(FILE *file, int *number) {
-    char *input, *end;
+    char *input = NULL, *end;
     fscanf(file, "%s", input);
-    *number = strtoul(input, &end, 10);
+    *number = (int)strtoul(input, &end, 10);
     if (errno == ERANGE) {
         return 0;
     }
@@ -11,7 +11,7 @@ int readInteger(FILE *file, int *number) {
 }
 
 int readDimension(FILE *file, size_t *number) {
-    char *input, *end;
+    char *input = NULL, *end;
     fscanf(file, "%s", input);
     *number = strtoull(input, &end, 10);
     if (errno == ERANGE) {
@@ -21,9 +21,9 @@ int readDimension(FILE *file, size_t *number) {
 }
 
 int readNumber(FILE *file, double *number) {
-    char *input, *end;
+    char *input = NULL, *end;
     fscanf(file, "%s", input);
-    *number = strtold(input, &end);
+    *number = (double)strtold(input, &end);
     if (errno == ERANGE) {
         return 0;
     }

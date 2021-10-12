@@ -74,20 +74,20 @@ void binaryInsertionSortArray(double *array, size_t dimension) {
     }
 }
 
-void binaryInsertionSort(struct BasicMatrix basic) {
-    switch (basic.currentType) {
+void binaryInsertionSort(struct BasicMatrix *basic) {
+    switch (basic->currentType) {
         case USUAL:
-            binaryInsertionSortMatrix(basic.usual->matrix, basic.dimension);
+            binaryInsertionSortMatrix(basic->usual->matrix, basic->dimension);
             break;
         case DIAGONAL:
-            binaryInsertionSortArray(basic.diagonal->matrix, basic.dimension);
+            binaryInsertionSortArray(basic->diagonal->matrix, basic->dimension);
             break;
         case TRIANGULAR:
-            double **matrix = convertToTwoDimensional(basic.triangular->matrix, basic.dimension);
-            binaryInsertionSortMatrix(matrix, basic.dimension);
-            free(basic.triangular->matrix);
-            basic.triangular->matrix = convertToArray(matrix, basic.dimension);
-            for (int i = 0; i < basic.dimension; ++i) {
+            double **matrix = convertToTwoDimensional(basic->triangular->matrix, basic->dimension);
+            binaryInsertionSortMatrix(matrix, basic->dimension);
+            free(basic->triangular->matrix);
+            basic->triangular->matrix = convertToArray(matrix, basic->dimension);
+            for (int i = 0; i < basic->dimension; ++i) {
                 free(*matrix);
             }
             free(matrix);

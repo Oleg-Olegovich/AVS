@@ -9,7 +9,7 @@ struct DiagonalMatrix {
     double *matrix;
 };
 
-void initializeDiagonal(struct DiagonalMatrix *diagonal, size_t dimension);
-void clearDiagonal(struct DiagonalMatrix *diagonal);
+void initializeDiagonal(struct DiagonalMatrix **diagonal, size_t dimension);
+void clearDiagonal(struct DiagonalMatrix **diagonal);
 
 #endif

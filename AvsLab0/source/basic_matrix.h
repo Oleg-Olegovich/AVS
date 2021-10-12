@@ -23,8 +23,8 @@ struct BasicMatrix {
 void initialize(struct BasicMatrix *base);
 void clear(struct BasicMatrix *base);
 double generateNumber();
-struct BasicMatrix generateMatrix();
-struct BasicMatrix generateDiagonalMatrix();
-struct BasicMatrix generateTriangularMatrix();
+struct BasicMatrix* generateMatrix();
+struct BasicMatrix* generateDiagonalMatrix();
+struct BasicMatrix* generateTriangularMatrix();
 
 #endif
