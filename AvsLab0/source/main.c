@@ -17,17 +17,14 @@ int fileProcessing(char* input_path, char* output_path) {
         return 1;
     }
     struct BasicMatrix base;
-    if (readInteger(input, &base.dimension) == 0) {
+    if (readDimension(input, &base.dimension) == 0) {
         printInvalideDimensionError();
         return 1;
     }
     switch (type) {
         case 0:
-            int **m = malloc(base.dimension * sizeof(*m));
-            base.usual->matrix = malloc(base.dimension * sizeof(*(base.usual->matrix)));
-            for (size_t i = 0; i < base.dimension; ++i) {
-                base.usual->matrix[i] = malloc(base.dimension * sizeof(**(base.usual->matrix)));
-            }
+            base.currentType = USUAL;
+            initialize(&base);
             if (readNumericMatrix(input, base.usual->matrix, base.dimension) == 0) {
                 return 1;
             }
@@ -36,13 +33,10 @@ int fileProcessing(char* input_path, char* output_path) {
             fprintf(output, "%s", "Matrix after sorting:\n");
             binaryInsertionSort(base);
             printMatrix(output, base.usual->matrix, base.dimension);
-            for (int i = 0; i < base.dimension; ++i) {
-                free(*(base.usual->matrix));
-            }
-            free(base.usual->matrix);
             break;
         case 1:
-            base.diagonal->matrix = malloc(base.dimension * sizeof(*(base.diagonal->matrix)));
+            base.currentType = DIAGONAL;
+            initialize(&base);
             if (readNumericArray(input, base.diagonal->matrix, base.dimension) == 0) {
                 return 1;
             }
@@ -51,12 +45,12 @@ int fileProcessing(char* input_path, char* output_path) {
             fprintf(output, "%s", "Matrix after sorting:\n");
             binaryInsertionSort(base);
             printDiagonalMatrix(output, base.diagonal->matrix, base.dimension);
-            free(base.diagonal->matrix);
             break;
         case 2:
-            size_t size = base.dimension * (base.dimension - 1) / 2;
-            base.triangular->matrix = malloc(size * sizeof(*(base.triangular->matrix)));
-            if (readNumericArray(input, base.triangular->matrix, size) == 0) {
+            base.currentType = TRIANGULAR;
+            initialize(&base);
+            if (readNumericArray(input, base.triangular->matrix,
+                                 base.dimension * (base.dimension - 1) / 2) == 0) {
                 return 1;
             }
             fprintf(output, "%s", "Matrix before sorting:\n");
@@ -64,12 +58,12 @@ int fileProcessing(char* input_path, char* output_path) {
             fprintf(output, "%s", "Matrix after sorting:\n");
             binaryInsertionSort(base);
             printTriangularMatrix(output, base.triangular->matrix, base.dimension);
-            free(base.triangular->matrix);
             break;
         default:
             printInvalidTypeError();
             return 1;
     }
+    clear(&base);
     fclose(input);
     fclose(output);
     return 0;

@@ -19,4 +19,7 @@ struct BasicMatrix {
     size_t dimension;
 };
 
+void initialize(struct BasicMatrix *base);
+void clear(struct BasicMatrix *base);
+
 #endif

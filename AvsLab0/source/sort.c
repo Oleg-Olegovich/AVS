@@ -15,7 +15,7 @@ long double calculateArithmeticMean(const double *array, size_t dimension) {
 size_t binarySearchInMatrix(double **matrix, size_t dimension, long double mean,
                     size_t low, size_t high) {
     if (high <= low) {
-        return (mean > calculateArithmeticMean(matrix[low], dimension))
+        return (mean + eps < calculateArithmeticMean(matrix[low], dimension))
                ? (low + 1) : low;
     }
     size_t mid = (low + high) / 2;
@@ -23,7 +23,7 @@ size_t binarySearchInMatrix(double **matrix, size_t dimension, long double mean,
     if (fabsl(mean - mid_value) < eps) {
         return mid + 1;
     }
-    if (mean > mid_value + eps) {
+    if (mean + eps < mid_value) {
         return binarySearchInMatrix(matrix, dimension, mean, mid + 1, high);
     }
     return binarySearchInMatrix(matrix, dimension, mean, low, mid - 1);
@@ -48,13 +48,13 @@ void binaryInsertionSortMatrix(double **matrix, size_t dimension) {
 size_t binarySearchInArray(double *array, size_t dimension, double item,
                     size_t low, size_t high) {
     if (high <= low) {
-        return (item > array[low]) ? (low + 1) : low;
+        return (item + eps < array[low]) ? (low + 1) : low;
     }
     size_t mid = (low + high) / 2;
-    if (item == array[mid]) {
+    if (fabsl(item - array[mid]) < eps) {
         return mid + 1;
     }
-    if (item > array[mid]) {
+    if (item + eps < array[mid]) {
         return binarySearchInArray(array, dimension, item, mid + 1, high);
     }
     return binarySearchInArray(array, dimension, item, low, mid - 1);
