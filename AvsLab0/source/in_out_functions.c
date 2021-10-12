@@ -74,7 +74,7 @@ void printTriangularMatrix(FILE *file, double *matrix, long long dimension) {
     long long start_index_row = 0;
     for (long long i = 0; i < dimension; ++i) {
         for (long long j = 0; j < dimension; ++j) {
-            fprintf(file, "%lf", (j < i ? matrix[start_index_row + j] : '0'));
+            fprintf(file, "%lf", (j < i ? matrix[start_index_row + j] : 0));
             fprintf(file, "%c", ' ');
         }
         start_index_row += i;
