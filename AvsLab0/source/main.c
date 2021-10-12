@@ -95,13 +95,15 @@ int fileProcessing(char* input_path, char* output_path) {
     return 0;
 }
 
-int generateProcessing(const char *matrix_type, char *output_path) {
+int generateProcessing(const char *matrix_type, const char *input_size, char *output_path) {
     FILE *output = fopen(output_path, "w");
     int type = matrix_type[0] - '0';
+    char *end;
+    long long dimension = strtoll(input_size, &end, 10);
     struct BasicMatrix* base;
     switch (type) {
         case 0:
-            base = generateMatrix();
+            base = generateMatrix(dimension);
             fprintf(output, "%s", "Matrix before sorting:\n");
             printMatrix(output, base->usual->matrix, base->dimension);
             fprintf(output, "%s", "Matrix after sorting:\n");
@@ -109,7 +111,7 @@ int generateProcessing(const char *matrix_type, char *output_path) {
             printMatrix(output, base->usual->matrix, base->dimension);
             break;
         case 1:
-            base = generateDiagonalMatrix();
+            base = generateDiagonalMatrix(dimension);
             fprintf(output, "%s", "Matrix before sorting:\n");
             printDiagonalMatrix(output, base->diagonal->matrix, base->dimension);
             fprintf(output, "%s", "Matrix after sorting:\n");
@@ -117,7 +119,7 @@ int generateProcessing(const char *matrix_type, char *output_path) {
             printDiagonalMatrix(output, base->diagonal->matrix, base->dimension);
             break;
         case 2:
-            base = generateTriangularMatrix();
+            base = generateTriangularMatrix(dimension);
             fprintf(output, "%s", "Matrix before sorting:\n");
             printTriangularMatrix(output, base->triangular->matrix, base->dimension);
             fprintf(output, "%s", "Matrix after sorting:\n");
@@ -138,26 +140,28 @@ int generateProcessing(const char *matrix_type, char *output_path) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 4) {
+    if (!(argc == 4 && strcmp(argv[1], "-f") == 0 || argc == 5 && strcmp(argv[1], "-r") == 0)) {
         printInvalideCommandLineError();
         return 1;
     }
-    if (fileExists(argv[3]) == 0) {
-        printNonexistentFileError(argv[3]);
-        return 1;
-    }
-    char *output_path = (char*)malloc(strlen(argv[3]) * sizeof(char));
-    strcpy(output_path, argv[3]);
-    if (strcmp(argv[1], "-f") == 0) {
+    if (argc == 4) {
         if (fileExists(argv[2]) == 0) {
             printNonexistentFileError(argv[2]);
             return 1;
         }
+        if (fileExists(argv[3]) == 0) {
+            printNonexistentFileError(argv[3]);
+            return 1;
+        }
+        char *output_path = (char*)malloc(strlen(argv[3]) * sizeof(char));
+        strcpy(output_path, argv[3]);
         return fileProcessing(argv[2], output_path);
     }
-    if (strcmp(argv[1], "-r") == 0) {
-        return generateProcessing(argv[2], output_path);
+    if (fileExists(argv[4]) == 0) {
+        printNonexistentFileError(argv[4]);
+        return 1;
     }
-    printInvalideCommandLineError();
-    return 1;
+    char *output_path = (char*)malloc(strlen(argv[4]) * sizeof(char));
+    strcpy(output_path, argv[4]);
+    return generateProcessing(argv[2], argv[3], output_path);
 }

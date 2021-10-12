@@ -105,7 +105,7 @@ void printInvalideDimensionError() {
 void printInvalideCommandLineError() {
     printf("Invalide command line! One of two options is expected:\n");
     printf("command -f <input file name> <output file name>\n");
-    printf("command -r <matrix type> <output file name>\n");
+    printf("command -r <matrix type> <matrix size> <output file name>\n");
 }
 
 void printNonexistentFileError(char *file_path) {

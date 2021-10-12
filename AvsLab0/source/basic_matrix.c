@@ -34,39 +34,39 @@ double generateNumber() {
     return -100.0 + 201.0 * rand();
 }
 
-struct BasicMatrix* generateMatrix() {
+struct BasicMatrix* generateMatrix(long long dimension) {
     struct BasicMatrix* base = (struct BasicMatrix*) malloc(sizeof(struct BasicMatrix));
     base->currentType = USUAL;
-    srand(time(0));
-    base->dimension = 1 + rand() % 10;
+    base->dimension = dimension;
     initialize(base);
-    for (long long i = 0; i < base->dimension; ++i) {
-        for (long long j = 0; j < base->dimension; ++j) {
+    srand(time(0));
+    for (long long i = 0; i < dimension; ++i) {
+        for (long long j = 0; j < dimension; ++j) {
             base->usual->matrix[i][j] = generateNumber();
         }
     }
     return base;
 }
 
-struct BasicMatrix* generateDiagonalMatrix() {
+struct BasicMatrix* generateDiagonalMatrix(long long dimension) {
     struct BasicMatrix* base = (struct BasicMatrix*) malloc(sizeof(struct BasicMatrix));
     base->currentType = DIAGONAL;
+    base->dimension = dimension;
+    initialize(base);
     srand(time(0));
-    base->dimension = 1 + rand() % 10;
-    initialize(&base);
-    for (long long i = 0; i < base->dimension; ++i) {
+    for (long long i = 0; i < dimension; ++i) {
         base->diagonal->matrix[i] = generateNumber();
     }
     return base;
 }
 
-struct BasicMatrix* generateTriangularMatrix() {
+struct BasicMatrix* generateTriangularMatrix(long long dimension) {
     struct BasicMatrix* base = (struct BasicMatrix*) malloc(sizeof(struct BasicMatrix));
     base->currentType = TRIANGULAR;
+    base->dimension = dimension;
+    initialize(base);
     srand(time(0));
-    base->dimension = 1 + rand() % 10;
-    initialize(&base);
-    long long size = base->dimension * (base->dimension - 1) / 2;
+    long long size = dimension * (dimension - 1) / 2;
     for (long long i = 0; i < size; ++i) {
         base->triangular->matrix[i] = generateNumber();
     }
