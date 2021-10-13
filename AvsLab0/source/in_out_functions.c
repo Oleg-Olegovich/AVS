@@ -13,8 +13,8 @@ int readInteger(FILE *file, int *number) {
 int readDimension(FILE *file, long long *number) {
     char *input[21], *end;
     fscanf(file, "%s", input);
-    *number = strtoull(input, &end, 10);
-    if (errno == ERANGE) {
+    *number = strtoll(input, &end, 10);
+    if (errno == ERANGE || *number < 1) {
         return 0;
     }
     return 1;
@@ -23,8 +23,8 @@ int readDimension(FILE *file, long long *number) {
 int readNumber(FILE *file, double *number) {
     char *input[DBL_MAX_10_EXP + 3], *end;
     fscanf(file, "%s", input);
-    *number = (double)strtold(input, &end);
-    if (errno == ERANGE) {
+    *number = (double)strtod(input, &end);
+    if (errno == ERANGE || *end != 0) {
         return 0;
     }
     return 1;
@@ -95,7 +95,7 @@ void printInvalideDimensionError() {
 void printInvalideCommandLineError() {
     printf("Invalide command line! One of two options is expected:\n");
     printf("command -f <input file name> <output file name>\n");
-    printf("command -r <matrix type> <output file name>\n");
+    printf("command -r <matrix type> <matrix size> <output file name>\n");
 }
 
 void printNonexistentFileError(char *file_path) {
