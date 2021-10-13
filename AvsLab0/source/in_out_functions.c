@@ -21,22 +21,12 @@ int readDimension(FILE *file, long long *number) {
 }
 
 int readNumber(FILE *file, double *number) {
-    char *input, *end;
-    input = malloc((DBL_MAX_10_EXP + 3) * sizeof(char));
+    char *input[DBL_MAX_10_EXP + 3], *end;
     fscanf(file, "%s", input);
     *number = (double)strtod(input, &end);
-    if (errno == ERANGE) {
+    if (errno == ERANGE || *end != 0) {
         return 0;
     }
-    if (*number == 0) {
-        for (int i = 0; i < DBL_MAX_10_EXP + 3; ++i) {
-            if (input[i] != '0' && input[i] != '.') {
-                free(input);
-                return 0;
-            }
-        }
-    }
-    free(input);
     return 1;
 }
 
