@@ -20,6 +20,10 @@ void BasicMatrix::read(FILE *file) {
 
 }
 
+void BasicMatrix::print(FILE *file) {
+
+}
+
 double BasicMatrix::generateNumber() {
     return 0;
 }

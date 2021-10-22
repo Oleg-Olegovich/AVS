@@ -4,12 +4,14 @@
 #include <cstdio>
 
 class BasicMatrix {
-private:
-    void readNumber(FILE *file);
 protected:
+    long long dimension;
+
+    void readNumber(FILE *file);
     virtual void read(FILE *file);
     virtual void sort();
-    long long dimension;
+    virtual void print(FILE *file);
+
 public:
     explicit BasicMatrix(long long input_dimension);
     ~BasicMatrix();
