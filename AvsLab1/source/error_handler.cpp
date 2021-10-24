@@ -1,5 +1,7 @@
 #include "error_handler.h"
 
+using cout;
+
 static void ErrorHandler::printInvalidNumberError() {
     cout << "Invalid number!\n"
          << "A real number in the range is expected 1,7E +/- 308.\n";

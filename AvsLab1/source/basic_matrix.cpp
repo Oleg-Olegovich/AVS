@@ -4,38 +4,38 @@ BasicMatrix::BasicMatrix(long long input_dimension) {
     dimension = input_dimension;
 }
 
-BasicMatrix::~BasicMatrix() {
+void BasicMatrix::sort() {}
+void BasicMatrix::read(const ifstream &file) {}
+void BasicMatrix::print(const ofstream &file) {}
+void BasicMatrix::generate() {}
 
+double BasicMatrix::generateNumber(double minimum, double range_width) {
+    srand(time(0));
+    return minimum + range_width * rand();
 }
 
-void BasicMatrix::sort() {
-
+int BasicMatrix::readInteger(FILE *file) {
+    char *input[11], *end;
+    fscanf(file, "%s", *input);
+    int number = (int)strtoul(*input, &end, 10);
+    if (errno == ERANGE) {
+        throw 10;
+    }
+    return number;
 }
 
-void BasicMatrix::readNumber(FILE *file) {
-
+long long BasicMatrix::readDimension(FILE *file) {
+    string input;
+    file >> input;
+    long long number = stoll(input);
+    if (number < 1) {
+        throw 11;
+    }
+    return number;
 }
 
-void BasicMatrix::read(FILE *file) {
-
-}
-
-void BasicMatrix::print(FILE *file) {
-
-}
-
-double BasicMatrix::generateNumber() {
-    return 0;
-}
-
-BasicMatrix& BasicMatrix::generateMatrix(long long dimension) {
-    return <#initializer#>;
-}
-
-BasicMatrix& BasicMatrix::generateDiagonalMatrix(long long dimension) {
-    return <#initializer#>;
-}
-
-BasicMatrix& BasicMatrix::generateTriangularMatrix(long long dimension) {
-    return <#initializer#>;
+double BasicMatrix::readNumber(FILE *file) {
+    string input;
+    file >> input;
+    return stod(input);
 }
