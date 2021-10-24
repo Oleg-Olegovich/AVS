@@ -4,16 +4,16 @@
 #include "basic_matrix.h"
 
 class UsualMatrix : public BasicMatrix {
-private:
+public:
     double **matrix;
 
-public:
-    UsualMatrix(long long dimension);
+    explicit UsualMatrix(long long dimension);
     ~UsualMatrix();
-    virtual void read(const ifstream &file);
-    virtual void sort();
-    virtual void print(const ofstream &file);
-    virtual void generate();
+
+    int read(FILE *file) override;
+    void sort() override;
+    void print(FILE *file) override;
+    void generate() override;
 };
 
 #endif

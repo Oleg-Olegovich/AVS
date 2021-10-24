@@ -1,32 +1,34 @@
 #include "error_handler.h"
 
-using cout;
-
-static void ErrorHandler::printInvalidNumberError() {
-    cout << "Invalid number!\n"
-         << "A real number in the range is expected 1,7E +/- 308.\n";
+void ErrorHandler::printInvalidNumberError() {
+    printf("Invalid number!\n");
+    printf("A real number in the range is expected 1,7E +/- 308.\n");
 }
 
-static void ErrorHandler::printInvalidDimensionError() {
-    cout << "Invalid dimension!\nA natural number is expected.\n";
+void ErrorHandler::printInvalidDimensionError() {
+    printf("Invalid dimension!\n");
+    printf("A natural number is expected.\n");
 }
 
-static void ErrorHandler::printInvalidCommandLineError() {
-    cout << "Invalide command line! One of two options is expected:\n";
-    cout << "command -f <input file name> <output file name>\n";
-    cout << "command -r <matrix type> <matrix size> <output file name>\n";
+void ErrorHandler::printInvalidCommandLineError() {
+    printf("Invalide command line! One of two options is expected:\n");
+    printf("command -f <input file name> <output file name>\n");
+    printf("command -r <matrix type> <matrix size> <output file name>\n");
 }
 
-static void ErrorHandler::printNonexistentFileError(const string &file_path) {
-    cout << "This file doesn't exist:\n" << file_path << '\n';
+void ErrorHandler::printNonexistentFileError(char *file_path) {
+    printf("This file doesn't exist:\n");
+    printf("%s", file_path);
+    printf("%c", '\n');
 }
 
-static void ErrorHandler::printInvalidTypeError() {
-    cout << "Invalid matrix type!\n"
-         << "Expected: \"0\" - usual, \"1\" - diagonal or \"2\" - triangular.\n";
+void ErrorHandler::printInvalidTypeError() {
+    printf("Invalid matrix type!\n");
+    printf("Expected: \"0\" - usual, \"1\" - diagonal or \"2\" - triangular.\n");
 }
 
-static void ErrorHandler::printOkMessage(const string &file_path) {
-    cout << "The program was executed without errors. The output is in this file:\n"
-         << file_path << '\n';
+void ErrorHandler::printOkMessage(char *file_path) {
+    printf("The program was executed without errors. The output is in this file:\n");
+    printf("%s", file_path);
+    printf("%c", '\n');
 }

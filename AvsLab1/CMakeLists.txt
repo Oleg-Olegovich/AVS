@@ -12,4 +12,6 @@ add_executable(AvsLab1
         source/triangular_matrix.cpp
         source/triangular_matrix.h
         source/usual_matrix.cpp
-        source/usual_matrix.h)
+        source/usual_matrix.h
+        source/error_handler.cpp
+        source/error_handler.h)
