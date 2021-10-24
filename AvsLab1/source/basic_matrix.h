@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cstdint>
 #include <cmath>
+#include <cfloat>
 #include "error_handler.h"
 
 const long double eps = 1e-8;

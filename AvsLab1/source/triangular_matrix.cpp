@@ -38,7 +38,7 @@ void TriangularMatrix::sort() {
 int TriangularMatrix::read(FILE *file) {
     long long length = dimension * (dimension - 1) / 2;
     for (long long i = 0; i < length; ++i) {
-        if (readNumber(file, &matrix[i]) == 0) {
+        if (readNumber(file, &matrix[i]) == 1) {
             return 1;
         }
     }

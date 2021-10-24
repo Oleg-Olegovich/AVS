@@ -39,7 +39,7 @@ void DiagonalMatrix::sort() {
 
 int DiagonalMatrix::read(FILE *file) {
     for (long long i = 0; i < dimension; ++i) {
-        if (readNumber(file, &matrix[i]) == 0) {
+        if (readNumber(file, &matrix[i]) == 1) {
             return 1;
         }
     }

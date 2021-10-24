@@ -5,7 +5,7 @@
 
 bool fileExists(char *filename) {
     struct stat buffer{};
-    return (stat(filename, &buffer) == 0 ? 1 : 0);
+    return (stat (filename, &buffer) == 0);
 }
 
 int main(int argc, char *argv[]) {
@@ -15,11 +15,11 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     if (argc == 4) {
-        if (fileExists(argv[2]) == 0) {
+        if (!fileExists(argv[2])) {
             ErrorHandler::printNonexistentFileError(argv[2]);
             return 1;
         }
-        if (fileExists(argv[3]) == 0) {
+        if (!fileExists(argv[3])) {
             ErrorHandler::printNonexistentFileError(argv[3]);
             return 1;
         }
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
         strcpy(output_path, argv[3]);
         return BasicMatrix::demonstrate(argv[2], output_path);
     }
-    if (fileExists(argv[4]) == 0) {
+    if (!fileExists(argv[4])) {
         ErrorHandler::printNonexistentFileError(argv[4]);
         return 1;
     }

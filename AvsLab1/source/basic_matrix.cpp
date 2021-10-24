@@ -39,31 +39,32 @@ int BasicMatrix::readDimension(FILE *file, long long *number) {
 }
 
 int BasicMatrix::readNumber(FILE *file, double *number) {
-    *number = -1;
-    fscanf(file, "%lf", number);
-    if (*number < 1) {
+    long double input_number = LDBL_MAX;
+    fscanf(file, "%Lf", &input_number);
+    if (input_number > DBL_MAX || input_number < -DBL_MAX) {
         return 1;
     }
+    *number = (double)input_number;
     return 0;
 }
 
 BasicMatrix* BasicMatrix::initialize(int type, long long int dimension) {
-    return nullptr;
     BasicMatrix* matrix;
     switch (type) {
         case 0:
-            //matrix = new UsualMatrix(dimension);
+            matrix = new UsualMatrix(dimension);
             break;
         case 1:
-            //matrix = new DiagonalMatrix(dimension);
+            matrix = new DiagonalMatrix(dimension);
             break;
         case 2:
-            //matrix = new TriangularMatrix(dimension);
+            matrix = new TriangularMatrix(dimension);
             break;
         default:
             ErrorHandler::printInvalidTypeError();
             return nullptr;
     }
+    return matrix;
 }
 
 void BasicMatrix::demonstrate(BasicMatrix *basic, FILE *output) {
@@ -76,11 +77,12 @@ void BasicMatrix::demonstrate(BasicMatrix *basic, FILE *output) {
 
 int BasicMatrix::demonstrate(char *input_path, char *output_path) {
     FILE *input = fopen(input_path, "r");
+    FILE *output = fopen(output_path, "w");
     int type;
     if (readInteger(input, &type) == 1) {
         ErrorHandler::printInvalidTypeError();
         fclose(input);
-        free(input_path);
+        fclose(output);
         free(output_path);
         return 1;
     }
@@ -88,23 +90,22 @@ int BasicMatrix::demonstrate(char *input_path, char *output_path) {
     if (readDimension(input, &dimension) == 1) {
         ErrorHandler::printInvalidDimensionError();
         fclose(input);
+        fclose(output);
         free(output_path);
         return 1;
     }
     BasicMatrix *basic = initialize(type, dimension);
     if (basic == nullptr) {
         fclose(input);
-        free(input_path);
+        fclose(output);
         free(output_path);
         return 1;
     }
-    FILE *output = fopen(output_path, "w");
     if (basic->read(input) == 1) {
         ErrorHandler::printInvalidNumberError();
         delete basic;
         fclose(input);
         fclose(output);
-        free(input_path);
         free(output_path);
         return 1;
     }
@@ -112,7 +113,6 @@ int BasicMatrix::demonstrate(char *input_path, char *output_path) {
     delete basic;
     fclose(input);
     fclose(output);
-    free(input_path);
     ErrorHandler::printOkMessage(output_path);
     free(output_path);
     return 0;
