@@ -1,0 +1,11 @@
+0: It is usual matrix. Dimension = 5; Arithmetic average of the matrix elements = 1.000
+1: It is diagonal matrix. Dimension = 7; Arithmetic average of the matrix elements = 0.143
+2: It is diagonal matrix. Dimension = 16; Arithmetic average of the matrix elements = 0.346
+3: It is diagonal matrix. Dimension = 10; Arithmetic average of the matrix elements = 1.000
+4: It is usual matrix. Dimension = 4; Arithmetic average of the matrix elements = 0.000
+5: It is diagonal matrix. Dimension = 2; Arithmetic average of the matrix elements = -1.000
+6: It is usual matrix. Dimension = 1; Arithmetic average of the matrix elements = 0.000
+7: It is diagonal matrix. Dimension = 3; Arithmetic average of the matrix elements = 1.333
+8: It is triangular matrix. Dimension = 7; Arithmetic average of the matrix elements = 0.228
+9: It is diagonal matrix. Dimension = 1; Arithmetic average of the matrix elements = 1.000
+10: It is usual matrix. Dimension = 7; Arithmetic average of the matrix elements = 2.505

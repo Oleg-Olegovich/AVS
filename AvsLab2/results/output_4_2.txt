@@ -1,0 +1,1 @@
+0: It is usual matrix. Dimension = 1; Arithmetic average of the matrix elements = 5.000

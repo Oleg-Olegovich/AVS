@@ -1,0 +1,4 @@
+0: It is usual matrix. Dimension = 7; Arithmetic average of the matrix elements = 3.420
+1: It is usual matrix. Dimension = 4; Arithmetic average of the matrix elements = 2.750
+2: It is diagonal matrix. Dimension = 9; Arithmetic average of the matrix elements = 0.963
+3: It is diagonal matrix. Dimension = 8; Arithmetic average of the matrix elements = 0.109

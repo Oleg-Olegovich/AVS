@@ -1,0 +1,1 @@
+0: It is diagonal matrix. Dimension = 7; Arithmetic average of the matrix elements = 0.796
