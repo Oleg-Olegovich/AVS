@@ -22,7 +22,7 @@ struct BasicMatrix {
 
 void initialize(struct BasicMatrix *base);
 void clear(struct BasicMatrix *base);
-long double getAverage(struct BasicMatrix *base, long long dimension);
+long double getAverage(struct BasicMatrix *base);
 
 double generateNumber();
 struct BasicMatrix* generateMatrix(long long dimension);

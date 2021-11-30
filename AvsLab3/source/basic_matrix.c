@@ -1,4 +1,7 @@
 #include "basic_matrix.h"
+#include "usual_matrixh"
+#include "diagonal_matrix.h"
+#include "triangular_matrix.h"
 
 void initialize(struct BasicMatrix *base) {
     switch (base->currentType) {
@@ -29,8 +32,15 @@ void clear(struct BasicMatrix *base) {
     free(base);
 }
 
-long double getAverage(struct BasicMatrix *base, long long dimension) {
-    return 0;
+long double getAverage(struct BasicMatrix *base) {
+    switch (base->currentType) {
+        case USUAL:
+            return getUsualAverage(base->usual, base->dimension);
+        case DIAGONAL:
+            return getDiagonalAverage(base->diagonal, base->dimension);
+        case TRIANGULAR:
+            return getTriangularAverage(base->triangular, base->dimension);
+    }
 }
 
 double generateNumber() {
