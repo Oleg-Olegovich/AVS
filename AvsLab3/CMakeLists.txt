@@ -1,19 +1,17 @@
 cmake_minimum_required(VERSION 3.20)
-project(AvsLab0 C)
+project(4 C ASM_NASM)
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 11)
+set(
+        PROJECT_HEADERS
+        matrix/matrix.h generator/generator.h container/container.h
+        reader/reader.h)
+set(
+        PROJECT_SOURCES
+        main.c generator/generator.c matrix/matrix.c container/container.asm
+        reader/reader.c)
 
-include_directories(source)
+set(CMAKE_ASM_FLAGS "${CFLAGS} -x assembler-with-cpp -F dwarf")
+SET(CMAKE_C_FLAGS  "${CMAKE_CXX_FLAGS} -no-pie")
 
-add_executable(AvsLab0
-        source/basic_matrix.c
-        source/basic_matrix.h
-        source/diagonal_matrix.c
-        source/diagonal_matrix.h
-        source/in_out_functions.c
-        source/in_out_functions.h
-        source/main.c
-        source/triangular_matrix.c
-        source/triangular_matrix.h
-        source/usual_matrix.c
-        source/usual_matrix.h source/usual_matrix.c)
+add_executable(4 ${PROJECT_SOURCES} ${PROJECT_HEADERS})
