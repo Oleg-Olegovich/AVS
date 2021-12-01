@@ -1,4 +1,4 @@
-raw
+usual
 
 diagonal
 10

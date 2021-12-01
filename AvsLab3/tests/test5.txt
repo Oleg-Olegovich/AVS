@@ -1,2 +1,2 @@
-random 47
-count 10000
+random 71
+count 1000

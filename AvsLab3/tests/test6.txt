@@ -1,1 +1,2 @@
-raw
+random 47
+count 10000
