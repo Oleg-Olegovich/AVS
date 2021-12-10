@@ -7,10 +7,10 @@ class Garden {
 private:
     void printMatrix() const;
     void clearMatrix() const;
-    std::mutex *garden_mutex;
 
 public:
     int** matrix, rows, columns;
+    std::mutex ***mutexes;
 
     Garden(int rows, int columns);
     ~Garden();
