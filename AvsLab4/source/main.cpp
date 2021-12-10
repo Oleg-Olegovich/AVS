@@ -9,9 +9,9 @@ using std::endl;
 
 void printGreeting() {
     cout << "Hello! There are 2 modes here:" << endl
-         << "1. Inputting dimensions manually." << endl
-         << "2. Random generation of dimensions in the range [1; 100]." << endl
-         << "Input the mode number." << endl;
+         << "1. Inputting parameters manually." << endl
+         << "2. Random generation of parameters (dimensions in the range [1; 100], speeds in the range [0; 10])."
+         << endl << "Input the mode number." << endl;
 }
 
 void printError() {
@@ -20,7 +20,7 @@ void printError() {
 
 void printManuallyMode() {
     cout << "You have selected manual mode." << endl
-         << "Now you will need to input 2 numbers in different lines." << endl;
+         << "Now you will need to input 4 numbers in different lines." << endl;
 }
 
 void printInputRows() {
@@ -29,6 +29,11 @@ void printInputRows() {
 
 void printInputColumns() {
     cout << "Input the number of columns. [1; 100]" << endl;
+}
+
+void printInputSpeed() {
+    cout << "Input the gardener's speed (this is the number of ms "
+           << "he will sleep between iterations). [0; 10]" << endl;
 }
 
 void printRandomMode() {
@@ -61,11 +66,13 @@ int main() {
         printError();
         getline(cin, input);
     }
-    int rows, columns;
+    int rows, columns, sleep_time[2];
     if (input == "2") {
         printRandomMode();
         rows = rand() % 100 + 1;
         columns = rand() % 100 + 1;
+        sleep_time[0] = rand() % 11;
+        sleep_time[1] = rand() % 11;
     } else {
         printManuallyMode();
         printInputRows();
@@ -82,12 +89,19 @@ int main() {
             printInputColumns();
             getline(cin, input);
         }
+        for (int &i : sleep_time) {
+            printInputSpeed();
+            getline(cin, input);
+            while (!tryParseInteger(input, i, 0, 10)) {
+                printError();
+                printInputSpeed();
+                getline(cin, input);
+            }
+        }
     }
     printDimensions(rows, columns);
     auto *garden = new Garden(rows, columns);
-    garden->demonstrate();
+    garden->demonstrate(sleep_time[0], sleep_time[1]);
     cout << endl;
-    garden->demonstrate(1);
-    delete garden;
     return 0;
 }

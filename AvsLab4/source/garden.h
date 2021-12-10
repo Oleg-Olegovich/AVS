@@ -6,7 +6,6 @@
 class Garden {
 private:
     void printMatrix() const;
-    void clearMatrix() const;
 
 public:
     int** matrix, rows, columns;
@@ -14,8 +13,7 @@ public:
 
     Garden(int rows, int columns);
     ~Garden();
-    void demonstrate(int sleep_time);
-    void demonstrate();
+    void demonstrate(int first_sleep_time, int second_sleep_time);
 };
 
 #endif

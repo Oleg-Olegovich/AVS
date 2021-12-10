@@ -18,14 +18,6 @@ void Garden::printMatrix() const {
     }
 }
 
-void Garden::clearMatrix() const {
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < columns; ++j) {
-            matrix[i][j] = 0;
-        }
-    }
-}
-
 Garden::Garden(const int rows, const int columns) : rows(rows), columns(columns) {
     matrix = new int *[rows];
     mutexes = new mutex**[rows];
@@ -52,15 +44,13 @@ Garden::~Garden() {
 }
 
 // The sleep time is indicated in milliseconds.
-void Garden::demonstrate(int sleep_time) {
-    clearMatrix();
+void Garden::demonstrate(int first_sleep_time, int second_sleep_time) {
     cout << "The beginning of the demonstration, the gardeners were not working yet." << endl;
-    cout << "The gardener's sleep time is set: " << sleep_time << " ms." << endl;
     printMatrix();
     cout << "The gardeners started working." << endl;
     auto *first = new Gardener(1), *second = new Gardener(2);
-    thread firstWorking(&Gardener::work, first, this, Modes::kLeftToRight, sleep_time);
-    thread secondWorking(&Gardener::work, second, this, Modes::kBottomToTop, sleep_time);
+    thread firstWorking(&Gardener::work, first, this, Modes::kLeftToRight, first_sleep_time);
+    thread secondWorking(&Gardener::work, second, this, Modes::kBottomToTop, second_sleep_time);
     firstWorking.join();
     secondWorking.join();
     cout << "The gardeners have finished working." << endl;
@@ -68,8 +58,4 @@ void Garden::demonstrate(int sleep_time) {
     cout << "End of the demonstration." << endl;
     delete first;
     delete second;
-}
-
-void Garden::demonstrate() {
-    demonstrate(0);
 }
