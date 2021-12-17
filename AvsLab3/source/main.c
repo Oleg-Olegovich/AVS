@@ -4,6 +4,17 @@
 #include <stdio.h>
 #include <time.h>
 
+struct ContainerTag;
+
+typedef struct ContainerTag {
+    int size;
+    Matrix data[10005];
+} Container;
+
+extern void addContainer(void* containerPtr, void *matrix);
+
+extern void sortContainer(void* containerPtr);
+
 void printMatrix(Matrix matrix, FILE *file) {
     printf("%d\n", matrix.size);
     fprintf(file, "%d\n", matrix.size);
