@@ -1,6 +1,6 @@
 #include "reader.h"
-#include "../generator/generator.h"
-#include "../matrix/matrix.h"
+#include "generator.h"
+#include "matrix.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -8,7 +8,7 @@
 const int INPUT_TYPE_MAX_LENGTH = 255;
 const int MATRIX_TYPE_MAX_LENGTH = 255;
 
-const char RAW_INPUT_TYPE[] = "raw";
+const char USUAL_INPUT_TYPE[] = "usual";
 const char RANDOM_INPUT_TYPE[] = "random";
 
 const char TWO_DIMENSIONS_MATRIX_TYPE[] = "2d";
@@ -55,7 +55,7 @@ Matrix readMatrixDiagonal(FILE *file) {
     return matrix;
 }
 
-void readToRaw(FILE *file, Container *container) {
+void readToUsual(FILE *file, Container *container) {
     while (!feof(file)) {
         char matrixType[MATRIX_TYPE_MAX_LENGTH];
         fscanf(file, "%s", matrixType);
@@ -88,8 +88,8 @@ void readTo(char *fileName, Container *container) {
     if (file != NULL) {
         char inputType[INPUT_TYPE_MAX_LENGTH];
         fscanf(file, "%s", inputType);
-        if (strcmp(inputType, RAW_INPUT_TYPE) == 0) {
-            readToRaw(file, container);
+        if (strcmp(inputType, USUAL_INPUT_TYPE) == 0) {
+            readToUsual(file, container);
         } else if (strcmp(inputType, RANDOM_INPUT_TYPE) == 0) {
             readToRandom(file, container);
         }

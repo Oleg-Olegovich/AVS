@@ -1,5 +1,5 @@
 #include "generator.h"
-#include "../matrix/matrix.h"
+#include "matrix.h"
 #include <stdlib.h>
 #include <assert.h>
 

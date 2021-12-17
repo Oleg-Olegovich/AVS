@@ -1,7 +1,7 @@
 #ifndef INC_1_CONTAINER_H
 #define INC_1_CONTAINER_H
 
-#include "../matrix/matrix.h"
+#include "matrix.h"
 
 struct ContainerTag;
 

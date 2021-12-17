@@ -33,7 +33,7 @@ double getAverage(Matrix matrix) {
     return sum / ((double) elementsCount);
 }
 
-void binarySearch(BasicMatrix *storage, long long length, long double mean,
+void binarySearch(struct BasicMatrix *storage, long long length, long double mean,
                   long long low, long long high) {
   if (high <= low) {
     return (mean + eps < getAverage(&storage[low])) ? (low + 1) : low;
@@ -62,15 +62,15 @@ void sort(Container *containerPtr) {
 }
 
 void binaryInsertionSort(Container *container) {
-  for (long long i = 1; i < container->length) {
+  for (long long i = 1; i < container->size) {
     long long j = i - 1;
-    long double selected_mean = getAverage(&container->storage[i]);
-    long long index = binarySearch(container->storage, container->length, selected_mean, 0, j);
-    long double selected = container->storage[i];
+    long double selected_mean = getAverage(&container->data[i]);
+    long long index = binarySearch((struct BasicMatrix *) container->data, container->size, selected_mean, 0, j);
+    long double selected = container->data[i];
     while (j >= index) {
-      container->storage[j + 1] = container->storage[j];
+      container->data[j + 1] = container->data[j];
       --j;
     }
-    container->storage[j + 1] = selected;
+    container->data[j + 1] = selected;
   }
 }
