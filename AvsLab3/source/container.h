@@ -10,7 +10,7 @@ typedef struct ContainerTag {
     Matrix data[10005];
 } Container;
 
-extern void addContainer(void* containerPtr, Matrix *matrix);
+extern void addContainer(void* containerPtr, void *matrix);
 
 extern void sortContainer(void* containerPtr);
 
