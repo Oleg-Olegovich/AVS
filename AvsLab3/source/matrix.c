@@ -3,9 +3,9 @@
 
 Matrix createMatrix2d(int size) {
     Matrix2D *matrix2d = (Matrix2D *) malloc(sizeof(Matrix2D));
-    matrix2d->data = malloc(sizeof(double *) * size);
+    matrix2d->data = (double **) malloc(sizeof(double *) * size);
     for (int i = 0; i < size; i++) {
-        matrix2d->data[i] = malloc(sizeof(double) * size);
+        matrix2d->data[i] = (double *) malloc(sizeof(double) * size);
     }
 
     Matrix resultMatrix;
@@ -17,7 +17,7 @@ Matrix createMatrix2d(int size) {
 
 Matrix createMatrixDiagonal(int size) {
     MatrixDiagonal *matrixDiagonal = (MatrixDiagonal *) malloc(sizeof(MatrixDiagonal));
-    matrixDiagonal->data = malloc(sizeof(double) * size);
+    matrixDiagonal->data = (double *) malloc(sizeof(double) * size);
 
     Matrix resultMatrix;
     resultMatrix.tag = MATRIX_TAG_DIAGONAL;
@@ -28,7 +28,7 @@ Matrix createMatrixDiagonal(int size) {
 
 Matrix createMatrixLowTriangle(int size) {
     MatrixLowTriangle *matrixLowTriangle = (MatrixLowTriangle *) malloc(sizeof(MatrixLowTriangle));
-    matrixLowTriangle->data = malloc(sizeof(double) * (size * (size + 1) / 2));
+    matrixLowTriangle->data = (double *) malloc(sizeof(double) * (size * (size + 1) / 2));
 
     Matrix resultMatrix;
     resultMatrix.tag = MATRIX_TAG_LOW_TRIANGLE;
